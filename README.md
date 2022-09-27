@@ -82,7 +82,7 @@ I see a link or button to remove that passenger from that flight
 When I click on that link/button
 I'm returned to the flights index page
 And I no longer see that passenger listed under that flight,
-And I still see the passenger listed on other flights
+And I still see the passenger listed under the other flights they were assigned to
 ```
 
 ```
