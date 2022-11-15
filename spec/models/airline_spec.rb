@@ -37,6 +37,7 @@ RSpec.describe Airline, type: :model do
   
   describe 'model tests' do
     it '#adult_passengers' do
+      expect(@airline1.adult_passengers).to eq(["deb", "joe", "ken", "rob", "ron"])
       expect(@airline2.adult_passengers).to eq(["col", "joe", "ken", "ron"])
     end
   end
