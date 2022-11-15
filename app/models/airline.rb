@@ -3,8 +3,7 @@ class Airline < ApplicationRecord
   has_many :passengers, through: :flights
   
   def adult_passengers
-    require 'pry'; binding.pry
-        passengers
+    passengers
     .where('age >= 18')
     .distinct
     .pluck(:name)
