@@ -19,13 +19,6 @@ ActiveRecord::Schema.define(version: 2022_09_26_171421) do
     t.string "name"
   end
 
-  create_table "doctors", force: :cascade do |t|
-    t.bigint "hospital_id"
-    t.string "name"
-    t.string "specialty"
-    t.string "university"
-    t.index ["hospital_id"], name: "index_doctors_on_hospital_id"
-  end
 
   create_table "flights", force: :cascade do |t|
     t.bigint "airline_id"
@@ -36,10 +29,6 @@ ActiveRecord::Schema.define(version: 2022_09_26_171421) do
     t.index ["airline_id"], name: "index_flights_on_airline_id"
   end
 
-  create_table "hospitals", force: :cascade do |t|
-    t.string "name"
-  end
 
-  add_foreign_key "doctors", "hospitals"
   add_foreign_key "flights", "airlines"
 end
