@@ -18,16 +18,16 @@ RSpec.describe 'Flights Index', type: :feature do
     @passenger6 = Passenger.create!(name: 'joe', age: 45)
     @passenger7 = Passenger.create!(name: 'col', age: 28)
 
-    @flight_passenger1 = FlightPassenger.create!(passenger: @passenger7, flight: @flight4)
-    @flight_passenger2 = FlightPassenger.create!(passenger: @passenger2, flight: @flight1)
-    @flight_passenger3 = FlightPassenger.create!(passenger: @passenger5, flight: @flight3)
-    @flight_passenger4 = FlightPassenger.create!(passenger: @passenger6, flight: @flight1)
-    @flight_passenger5 = FlightPassenger.create!(passenger: @passenger5, flight: @flight2)
-    @flight_passenger6 = FlightPassenger.create!(passenger: @passenger3, flight: @flight2)
-    @flight_passenger7 = FlightPassenger.create!(passenger: @passenger4, flight: @flight2)
-    @flight_passenger8 = FlightPassenger.create!(passenger: @passenger1, flight: @flight3)
-    @flight_passenger9 = FlightPassenger.create!(passenger: @passenger6, flight: @flight3)
-    @flight_passenger10 = FlightPassenger.create!(passenger: @passenger1, flight: @flight1)
+    @flight_passenger1 = FlightPassenger.create!(flight_id: @flight4.id, passenger_id: @passenger7.id)
+    @flight_passenger2 = FlightPassenger.create!(passenger_id: @passenger2.id, flight_id: @flight1.id)
+    @flight_passenger3 = FlightPassenger.create!(passenger_id: @passenger5.id, flight_id: @flight3.id)
+    @flight_passenger4 = FlightPassenger.create!(passenger_id: @passenger6.id, flight_id: @flight1.id)
+    @flight_passenger5 = FlightPassenger.create!(passenger_id: @passenger5.id, flight_id: @flight2.id)
+    @flight_passenger6 = FlightPassenger.create!(passenger_id: @passenger3.id, flight_id: @flight2.id)
+    @flight_passenger7 = FlightPassenger.create!(passenger_id: @passenger4.id, flight_id: @flight2.id)
+    @flight_passenger8 = FlightPassenger.create!(passenger_id: @passenger1.id, flight_id: @flight3.id)
+    @flight_passenger9 = FlightPassenger.create!(passenger_id: @passenger6.id, flight_id: @flight3.id)
+    @flight_passenger10 = FlightPassenger.create!(passenger_id: @passenger1.id, flight_id: @flight1.id)
   end
 
   it 'lists of all flight numbers, name of the Airline, and names of all that flights passengers' do 
@@ -37,7 +37,28 @@ RSpec.describe 'Flights Index', type: :feature do
       expect(page).to have_content(@passenger1.name)
       expect(page).to have_content(@passenger2.name)
       expect(page).to have_content(@passenger6.name)
+      expect(page).to have_link("Remove Passenger")
   end
 
-  
+  it 'can remove one passenger from a flight' do 
+    visit flights_path
+
+      within "#flight-#{@flight1.id}" do 
+        expect(page).to have_content(@passenger1.name)
+
+        within "#passenger-#{@passenger1.id}" do 
+          click_link("Remove Passenger")
+        end
+    end
+
+    expect(current_path).to eq(flights_path)
+
+    within "#flight-#{@flight1.id}" do 
+      expect(page).to have_content("joe") 
+    end
+    within "#flight-#{@flight2.id}" do 
+      expect(page).to_not have_content("joe") 
+    end
+
+  end 
 end   
